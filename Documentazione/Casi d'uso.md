@@ -5,15 +5,14 @@
 - **Stakeholder**:
   - Votante: Vuole partecipare a una consultazione attiva
   - Sistema di autenticazione sicuro: Vuole ricevere le credenziali dell'utente che vuole prendere parte a una votazione attiva
-- **Precondizioni**: Il votante deve essere registrato sulla piattaforma.
+- **Precondizioni**: Il votante deve essere registrato e autenticato sulla piattaforma.
 - **Garanzia di successo**: L'utente viene notificato della corretta ricezione del voto. Per i sondaggi lo storico delle scelte dell'utente viene aggiornato.
 - **Scenario principale di successo**:
-  1. Il votante si autentica sulla piattaforma 
-  2. Il sistema visualizza la pagina del sondaggio
-  3. Il votante seleziona l’opzione desiderata e conferma
-  4. Il sistema invia notifica di corretta ricezione del voto
+  1. Il sistema visualizza la pagina del sondaggio
+  2. Il votante seleziona l’opzione desiderata e conferma
+  3. Il sistema invia notifica di corretta ricezione del voto
 - **Scenari alternativi**:
-  - 2a. Il votante vuole partecipare a una votazione
+  - 1a. Il votante vuole partecipare a una votazione
     - Al momento dell'accesso alla pagina il sistema richiede di effettuare l'autenticazione sicura
     - Il sistema conferma la corretta autenticazione dell'utente
 - **Requisiti speciali**:
@@ -22,17 +21,17 @@
 - **Frequenza**: Può essere continua nel periodo fra l'inizio e la fine di una consultazione
 # UC2: Crea Consultazioni
 - **Portata**: Applicazione di votazione
-- **Livello**: Obbiettivo utente
+- **Livello**: Obiettivo utente
 - **Attore primario**: Amministratore
 - **Stakeholder**:
   - Amministratore: Vuole una procedura semplice e comprensibile senza errori
   - Votante: Vuole essere informato quando è stato aggiunto ad una consultazione
   - Candidato: Vuole avere accesso alla vetrina
-  - Compagnia: Vuole che tutti gli utenti interessati siano aggiunti. Vuole ottenere i risultati di suoi interesse.
-- **Precondizioni**: L'amministratore deve essere autenticato
-- **Garanzia di successo**: La consultazione é creata correttamente. Gli utenti sono aggiunti.
-- **Senario principale di successo**:
-  1. L'amministratore inizia la creazione di una comsultazione
+  - Compagnia: Vuole che tutti gli utenti interessati siano aggiunti. Vuole ottenere i risultati di suo interesse.
+- **Precondizioni**: L'amministratore deve essere registrato e autenticato sulla piattaforma.
+- **Garanzia di successo**: La consultazione è creata correttamente. Gli utenti sono aggiunti.
+- **Scenario principale di successo**:
+  1. L'amministratore inizia la creazione di una consultazione
   2. L'amministratore seleziona gli utenti
   3. Il sistema visualizza la lista degli utenti aggiunti
   4. L'amministratore seleziona i candidati
@@ -46,7 +45,7 @@
   13. Il sistema crea la consultazione con relativa vetrina
 - **Sequenze alternative**:
   - *a. L'amministratore interrompe la creazione:
-  - 3a.  l'amministratore rimuove uno o più utenti
+  - 3a.  L'amministratore rimuove uno o più utenti
   - 10a. L'amministratore aggiunge altri utenti che possono visualizzare i risultati
   - 9a. L'amministratore sceglie la votazione
   - 9b. L'amministratore sceglie il sondaggio
@@ -61,13 +60,13 @@
 * **Livello**: Obiettivo utente
 * **Attore primario**: Candidato
 * **Stakeholder e interessi**:
-   * Candidato: vuole comunicare ai votanti le proprie posizioni e argomentazioni relative alla consultazione.
-   * Votante: vuole avere informazioni relative alla opzioni del quesito della consultazione ed effettuare una scelta migliore.
-   * Amministratore: vuole che tutte per ogni opzione del quesito siano disponibili informazioni e argomentazioni per i votanti.
-   * Compagnia: vuole ottenere risultati attendibili, che riflettano l'opinione informata dei votanti sul quesito della consultazione.
+   * Candidato: Vuole comunicare ai votanti le proprie posizioni e argomentazioni relative alla consultazione.
+   * Votante: Vuole avere informazioni relative alle opzioni del quesito della consultazione ed effettuare una scelta migliore.
+   * Amministratore: Vuole che tutte per ogni opzione del quesito siano disponibili informazioni e argomentazioni per i votanti.
+   * Compagnia: Vuole ottenere risultati attendibili, che riflettano l'opinione informata dei votanti sul quesito della consultazione.
 * **Precondizioni**:
   * L'amministratore ha creato la votazione e selezionato i candidati (UC2)
-  * Il candidato è identificato e autenticato
+  * Il candidato deve essere registrato e autenticato sulla piattaforma.
 * **Garanzia di successo**: I contenuti multimediali sono caricati nella vetrina della consultazione e memorizzati dal sistema. I contenuti sono visibili ai votanti sulla pagina della consultazione.
 * **Scenario principale di successo**:
    1. Il candidato si autentica sulla piattaforma.
