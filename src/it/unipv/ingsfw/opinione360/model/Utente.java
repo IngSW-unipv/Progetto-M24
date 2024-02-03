@@ -2,6 +2,10 @@ package it.unipv.ingsfw.opinione360.model;
 
 import java.util.UUID;
 
+/**
+ * Classe base di Utente
+ */
+
 public class Utente {
 
 	private UUID id;
@@ -9,13 +13,29 @@ public class Utente {
 	private String password;
 	private String email;
 	private String id_societario;
-	
+
+	/**
+	 * Costruttore
+	 * @param username l'username dell'utente
+	 * @param password la password dell'utente
+	 */
 	public Utente(String username, String password) {
 		this.id = UUID.randomUUID();
 		this.username = username;
 		this.password = password;
 	}
-	
+
+	/**
+	 * Costruttore che prende l'id dell'utente
+	 * @param id id dell'utente che si vuole creare
+	 */
+	public Utente(UUID id) {
+		this.id = id;
+	}
+
+	/**
+	 * Costruttore senza parametri
+	 */
 	public Utente() {
 		this.id = UUID.randomUUID();
 	}
@@ -61,7 +81,6 @@ public class Utente {
 	}
 
 	public boolean equals(Utente user) {
-		// TODO Auto-generated method stub
 		return this.id.equals(user.getId());
 	}
 }
