@@ -4,20 +4,23 @@ import java.awt.*;
 import java.util.ArrayList;
 import javax.swing.*;
 
+/**
+ * Schermata relativa alla scelta della consultazione per la quale si vuole votare e alla scelta del proprio voto
+ */
 public class VotoFrame extends JFrame {
 	
-	private JPanel consSchermo;                     // cons = consultazione
+	private JLabel descTit;                         // desc = descrizione  
 	private JPanel opSchermo;                       // op = opzioni
-	private JPanel icSchermo;                       // ic = indietro-conferma
-	private JTextField consTit;
-	private JTextField descTit;                     // desc = descrizione
-	private ArrayList<JButton> consBottoni;         
+	private JPanel ivcSchermo;                      // ic = indietro-conferma
+
 	private ArrayList<JRadioButton> opBottoni;
 	private JButton indBottone;                     // ind = indietro
+	private JButton vetBottone;                     // vet = vetrina
 	private JButton confBottone;                    // conf = conferma
-	
-	private String b1Tit = null;
 
+	/**
+	 * Costruttore
+	 */
 	public VotoFrame() {
 		Toolkit kit = Toolkit.getDefaultToolkit();
 		Dimension screenSize = kit.getScreenSize();
@@ -25,10 +28,7 @@ public class VotoFrame extends JFrame {
 		int screenWidth = screenSize.width;
 		setSize(screenWidth / 2, screenHeight / 2);
 		setLocation(screenWidth / 4, screenHeight / 4);
-		Image img = kit.getImage("icon.gif");
-		setIconImage(img);
 		setTitle("Opinione 360");
-		consBottoni = new ArrayList<>();
 		opBottoni = new ArrayList<>();
 		initComponents();
 	}
@@ -36,67 +36,40 @@ public class VotoFrame extends JFrame {
 	private void initComponents() {
 		setLayout(new BorderLayout());
 		
-		JButton b1 = new JButton("Miglior pilota di Formula1?");
-		consBottoni.add(b1);
-		
-		consTit = new JTextField("Scegli la consultazione che ti interessa");
-		consTit.setBackground(this.getBackground());
-		consTit.setBorder(null);
-		consTit.setHorizontalAlignment(SwingConstants.CENTER);
-		consTit.setFont(new Font(null, 1, 18));
-		consTit.setEditable(false);
-		
-		consSchermo = new JPanel();
-		//consSchermo.setLayout(new GridLayout(5, 2, 40, 40));
-		consSchermo.setBorder(BorderFactory.createEmptyBorder(20, 40, 0, 40));
-		for(JButton cb : consBottoni)
-			consSchermo.add(cb);
-		
-		add(consTit, BorderLayout.NORTH);
-		add(consSchermo, BorderLayout.CENTER);
-		
-		descTit = new JTextField();
-		descTit.setBackground(this.getBackground());
-		descTit.setBorder(null);
+		descTit = new JLabel();
+		descTit.setPreferredSize(new Dimension(300, 70));
 		descTit.setHorizontalAlignment(SwingConstants.CENTER);
-		descTit.setFont(new Font(null, 1, 18));
-		descTit.setEditable(false);
-	
+		descTit.setFont(new Font("Arial", 1, 18));
+
 		opSchermo = new JPanel(new GridLayout(5, 2));
 		
-		icSchermo = new JPanel();
+		ivcSchermo = new JPanel();
 	
 		indBottone = new JButton("Indietro");
-		icSchermo.add(indBottone);
+		ivcSchermo.add(indBottone);
+		vetBottone = new JButton("Vetrina");
+		ivcSchermo.add(vetBottone);
 		confBottone = new JButton("Conferma");
-		icSchermo.add(confBottone);
+		ivcSchermo.add(confBottone);
 		
+		add(descTit, BorderLayout.NORTH);
+		add(opSchermo, BorderLayout.CENTER);
+		add(ivcSchermo, BorderLayout.SOUTH);
 	}
 	
-	public class errOpFrame extends JFrame {
-		
-		public errOpFrame() {
-			Toolkit kit = Toolkit.getDefaultToolkit();
-			Dimension screenSize = kit.getScreenSize();
-			int screenHeight = screenSize.height;
-			int screenWidth = screenSize.width;
-			setSize(screenWidth / 4, screenHeight / 4);
-			setLocation(screenWidth / 3, screenHeight / 3);
-			Image img = kit.getImage("icon.gif");
-			setIconImage(img);
-			setTitle("Errore");
-			JLabel l = new JLabel("Seleziona almeno un'opzione");
-			l.setHorizontalAlignment(SwingConstants.CENTER);
-			add(l);
-		}
-	}
-	
-	public void setB1Tit(String b1Tit) {
-		this.b1Tit = b1Tit;
+	/**
+	 * Imposta il quesito della consultazione 
+	 * @param b1Tit la stringa che contiene il quesito
+	 */
+	public void setDescTit(String b1Tit) {
 		descTit.setText(b1Tit);
 	}
 
-	public void setOpButtons(String[] scelte) {
+	/**
+	 * Imposta i bottoni con le opzioni della consultazione
+	 * @param scelte un array di stringhe che contengono le opzioni
+	 */
+	public void setOpBottoni(String[] scelte) {
 		opBottoni.removeAll(opBottoni);
 		opSchermo.removeAll();
 		for(int i = 0; i < scelte.length; i++)
@@ -104,41 +77,34 @@ public class VotoFrame extends JFrame {
 		for(JRadioButton ob : opBottoni)
 			opSchermo.add(ob);	
 	}
-
-	public ArrayList<JButton> getConsButtons() {
-		return consBottoni;
-	}
 	
-	public ArrayList<JRadioButton> getOpButtons() {
+	public ArrayList<JRadioButton> getOpBottoni() {
 		return opBottoni;
 	}
 	
-	public JButton getIndButton() {
+	public JButton getIndBottone() {
 		return indBottone; 
 	}
 	
-	public JButton getConfButton() {
-		return confBottone;
-	}
 	
-	public JTextField getConsTit() {
-		return consTit;
+	public JButton getVetBottone() {
+		return vetBottone;
 	}
 
-	public JPanel getConsScreen() {
-		return consSchermo;
+	public JButton getConfBottone() {
+		return confBottone;
 	}
-	
-	public JTextField getDescScreen() {
+
+	public JLabel getDescSchermo() {
 		return descTit;
 	}
 
-	public JPanel getOpScreen() {
+	public JPanel getOpSchermo() {
 		return opSchermo;
 	}
 	
-	public JPanel getICScreen() {
-		return icSchermo;
+	public JPanel getIVCSchermo() {
+		return ivcSchermo;
 	}
 	
 }
