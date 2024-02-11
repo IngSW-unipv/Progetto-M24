@@ -24,7 +24,19 @@ public class Utente {
 		this.username = username;
 		this.password = password;
 	}
-
+	
+	/**
+	 * Costruttore
+	 * @param id id dell'utente
+	 * @param username l'username dell'utente
+	 * @param password la password dell'utente
+	 */
+	public Utente(UUID id, String username, String password) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+	}
+	
 	/**
 	 * Costruttore che prende l'id dell'utente
 	 * @param id id dell'utente che si vuole creare
@@ -38,6 +50,29 @@ public class Utente {
 	 */
 	public Utente() {
 		this.id = UUID.randomUUID();
+	}
+
+	/**
+	 * Costruttore che prende tutti i parametri
+	 * @param username il nome utente
+	 * @param password la password
+	 * @param email l'email
+	 * @param id_societario l'id univoco all'interno della società di appartenenza dell'utente
+	 */
+	public Utente(String username, String password, String email, String id_societario){
+		id = UUID.randomUUID();
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.id_societario = id_societario;
+	}
+	
+	public Utente(UUID id, String username, String password, String email, String id_societario){
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.id_societario = id_societario;
 	}
 
 	public UUID getId() {
@@ -80,7 +115,14 @@ public class Utente {
 		this.id_societario = id_societario;
 	}
 
-	public boolean equals(Utente user) {
-		return this.id.equals(user.getId());
+	@Override
+	public boolean equals(Object obj) {
+		Utente userInput = (Utente) obj;
+		return this.id.equals(userInput.getId());
+	}
+
+	@Override
+	public String toString() {
+		return id + " " + username + " " + password + " " + email + " " + id_societario + "\n";
 	}
 }

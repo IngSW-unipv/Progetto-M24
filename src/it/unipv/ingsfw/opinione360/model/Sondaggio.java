@@ -4,16 +4,13 @@ import it.unipv.ingsfw.opinione360.model.exception.ConsultationExpiredException;
 import it.unipv.ingsfw.opinione360.model.exception.OptionNotFoundException;
 import it.unipv.ingsfw.opinione360.model.exception.UserMissingAccessException;
 
-import java.time.Instant;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Questa classe è il tipo base di consultazione
  * @see UserMissingAccessException
  * @see OptionNotFoundException
+ * @see ConsultationExpiredException
  * */
 public class Sondaggio implements IConsultazione{
 	
@@ -21,29 +18,27 @@ public class Sondaggio implements IConsultazione{
 	private int[] contatore;
 	private String quesito;
 	private String[] opzioni;	
-	private List<Utente> votanti, candidati;
-	private Date data_apertura;
-	private Date data_chiusura;
+	private ArrayList<Utente> votanti;
+	private ArrayList<Utente> candidati;
+	private Calendar data_apertura;
+	private Calendar data_chiusura;
 	private Vetrina vetrina;
 
-	public Sondaggio(){
-		id = UUID.randomUUID();
-		opzioni = new String[]{"0", "1", "2"};
-		contatore = new int[opzioni.length];
-		ArrayList<Utente> v = new ArrayList<>();
-		v.add(new Utente());
-		this.votanti = v;
-	}
 
-	public Sondaggio(Utente u){
-		id = new UUID(1,2);
-		opzioni = new String[]{"0", "1", "2"};
+	public Sondaggio(Utente u) {
+		id = UUID.randomUUID();
+		opzioni = new String[]{"0", "1", "2", "3", "4"};
 		contatore = new int[opzioni.length];
 		ArrayList<Utente> v = new ArrayList<>();
 		v.add(u);
 		this.votanti = v;
-		data_chiusura = new Date(2023, 02, 05, 00,00,00);
+		data_chiusura = new GregorianCalendar(2024, Calendar.FEBRUARY,10, 0, 0,0);
 	}
+	
+	public Sondaggio(UUID id) {
+		this.id = id;
+	}
+
 
 	/**
 	 * Costruttore
@@ -53,7 +48,7 @@ public class Sondaggio implements IConsultazione{
 	 * @param opzioni lista di opzioni
 	 * @param data_chiusura la data oltre cui non è possibile votare
 	 */
-	public Sondaggio(String quesito, ArrayList<Utente> v, ArrayList<Utente> c, String[] opzioni, Date data_chiusura){
+	public Sondaggio(String quesito, ArrayList<Utente> v, ArrayList<Utente> c, String[] opzioni, Calendar data_chiusura){
 		id = UUID.randomUUID();
 		contatore = new int[opzioni.length];
 		for(int i = 0; i < opzioni.length; i++)
@@ -72,6 +67,7 @@ public class Sondaggio implements IConsultazione{
 	 * @param u l'utente che vota
 	 * @throws OptionNotFoundException
 	 * @throws UserMissingAccessException
+	 * @throws ConsultationExpiredException
 	 */
 	@Override
 	public void vota(int scelta, Utente u) throws OptionNotFoundException, UserMissingAccessException, ConsultationExpiredException{
@@ -97,10 +93,20 @@ public class Sondaggio implements IConsultazione{
 	 * @return true se la consultazione è conclusa, false altrimenti
 	 */
 	public boolean isExpired(){
-		return this.data_chiusura.compareTo(Date.from(Instant.now())) < 0;
+		return this.data_chiusura.compareTo(Calendar.getInstance()) < 0;
 	}
 
+	/**
+	 * Metodo che controlla se la consultazione è già aperta
+	 * @return true se la consultazione è aperta, false altrimenti
+	 */
+	public boolean isOpen(){
+		return this.data_apertura.compareTo(Calendar.getInstance()) < 0;
+	}
 
+	/**
+	 * Metodo che stampa i risultati di un sondaggio concluso
+	 */
 	@Override
 	public void stampaRisultati(){
 		String risultato = "\nQuesito:\n" + quesito + "\n\n\nRisultati:\n";
@@ -136,11 +142,44 @@ public class Sondaggio implements IConsultazione{
 	 * @throws UserMissingAccessException
 	 */
 	public void caricaContenuto(Utente candidato, String contenuto) throws UserMissingAccessException{
+		vetrina.getArea(candidato).aggiungiContenuto(new ContenutoTesto(contenuto));
+	}
+	
+	public void caricaContenuto(Utente candidato, IContenuto contenuto) throws UserMissingAccessException{
 		vetrina.getArea(candidato).aggiungiContenuto(contenuto);
 	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		Sondaggio pollInput = (Sondaggio) obj;
+		return this.id.equals(pollInput.getId());
+	}
 
+	@Override
 	public UUID getId(){
 		return id;
 	}
+	@Override
+	public String getQuesito(){
+		return quesito;
+	}
+	@Override
+	public String[] getOpzioni() {
+		return opzioni;
+	}
 
+	@Override
+	public Vetrina getVetrina() {
+		return vetrina;
+	}
+
+	@Override
+	public ArrayList<Utente> getCandidati() {
+		return new ArrayList<>(candidati);
+	}
+
+	@Override
+	public ArrayList<Utente> getVotanti() {
+		return new ArrayList<>(votanti);
+	}
 }

@@ -2,6 +2,7 @@ package it.unipv.ingsfw.opinione360.model;
 
 import java.time.Instant;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Utente che può creare le consultazioni
@@ -20,7 +21,18 @@ public class Amministratore extends Utente {
 		super(username, password);
 		this.data_selezione=Date.from(Instant.now());
 	}
+	
+	public Amministratore(UUID id, String username, String password) {
+		super(username, password);
+		super.setId(id);
+		this.data_selezione=Date.from(Instant.now());
+	}
 
+	public Amministratore(UUID id, String username, String password, String email, String id_societario) {
+		super(username, password, email, id_societario);
+		super.setId(id);
+	}
+	
 	/**
 	 * Costruttore parametrizzato che permette di indicare la data di selezione
 	 * @param username

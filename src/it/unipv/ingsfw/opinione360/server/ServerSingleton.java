@@ -1,9 +1,11 @@
 package it.unipv.ingsfw.opinione360.server;
 
 import com.sun.net.httpserver.HttpServer;
+import it.unipv.ingsfw.opinione360.handler.*;
 
-import java.io.IOException;
+import java.io.FileInputStream;
 import java.net.InetSocketAddress;
+import java.util.Properties;
 import java.util.concurrent.Executors;
 
 /**
@@ -14,15 +16,17 @@ import java.util.concurrent.Executors;
 public class ServerSingleton implements IServer {
 
     private static ServerSingleton istance = null;
-    private final int PORTA = 60000;
+    private int porta;
     private HttpServer server;
-    private final int backlog = 10;
+    private int backlog;
 
 
     private ServerSingleton(){
         try {
-            server = HttpServer.create(new InetSocketAddress(PORTA),backlog);
-        } catch (IOException e) {
+            init();
+            server = HttpServer.create(new InetSocketAddress(porta),backlog);
+        } catch (Exception e) {
+            System.out.println("Errore nella creazione del server.");
             e.printStackTrace();
         }
     }
@@ -38,18 +42,46 @@ public class ServerSingleton implements IServer {
         return istance;
     }
 
+    private void init(){
+        final String PORT_NUMBER = "port.number";
+        final String BACKLOG = "backlog";
+        try {
+            Properties p = new Properties(System.getProperties());
+            p.load(new FileInputStream("Server/properties/properties.properties"));
+            porta = Integer.parseInt(p.getProperty(PORT_NUMBER));
+            backlog = Integer.parseInt(p.getProperty(BACKLOG));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     /**
      * Metodo che crea i Context al server e lo avvia
-     * I Context disponibili sono:
-     * /Vota
-     *
+     * I Context disponibili sono:<br>
+     * /Signup<br>
+     * /Login<br>
+     * /Vota<br>
+     * /Consultazioni_lista<br>
+     * /Consultazione<br>
+     * /Crea_consultazione<br>
+     * /Carica_vetrina<br>
      */
     @Override
     public void startServer(){
-        server.createContext("/Vota", new VotoHandler());
+        PostMethodFilter postFilter = new PostMethodFilter();
+        GetMethodFilter getFilter = new GetMethodFilter();
+
+        server.createContext("/Signup", new SignupHandler()).getFilters().add(postFilter);
+        server.createContext("/Login", new LoginHandler()).getFilters().add(postFilter);
+        server.createContext("/Vota", new VotoHandler()).getFilters().add(postFilter);
+        server.createContext("/Consultazioni_lista", new GetConsultazioniHandler()).getFilters().add(getFilter);
+        //server.createContext("/Consultazione");
+        server.createContext("/Crea_consultazione", new CreaConsultazioneHandler()).getFilters().add(postFilter);
+        server.createContext("/Carica_vetrina", new CaricaVetrinaHandler()).getFilters().add(postFilter);
+
         server.setExecutor(Executors.newCachedThreadPool());
         server.start();
-        System.out.println("Server in attesa sulla porta " + PORTA);
+        System.out.println("Server in attesa sulla porta " + porta);
     }
     @Override
     public void stopServer(){

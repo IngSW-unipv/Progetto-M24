@@ -41,8 +41,20 @@ public class Vetrina {
      * @param candidato l'utente che carica i contenuti
      * @param contenuti i contenuti testuali
      */
-    public void aggiungiArea(Utente candidato, String [] contenuti){
+    public void aggiungiArea(Utente candidato, IContenuto [] contenuti){
         elencoAreaCandidato.put(candidato, new AreaCandidato(contenuti));
+
+    }
+
+    
+    /**Aggiunge un contenuto alla vetrina per un candidato registrato.*/
+    public void aggiungiContenuto(Utente candidato, IContenuto contenuto) {
+    	if (elencoAreaCandidato.containsKey(candidato)) {
+    		elencoAreaCandidato.get(candidato).aggiungiContenuto(contenuto);
+    	}
+    	else {
+    		elencoAreaCandidato.put(candidato, new AreaCandidato(new IContenuto[]{contenuto}));    		
+    	}
     }
 
     /**

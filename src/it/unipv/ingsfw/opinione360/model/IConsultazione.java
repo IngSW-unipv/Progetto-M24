@@ -1,5 +1,8 @@
 package it.unipv.ingsfw.opinione360.model;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 import it.unipv.ingsfw.opinione360.model.exception.OptionNotFoundException;
 import it.unipv.ingsfw.opinione360.model.exception.UserMissingAccessException;
 
@@ -13,4 +16,10 @@ public interface IConsultazione {
     
     void stampaRisultati();
     
+    public UUID getId();
+	public String getQuesito();
+	public String[] getOpzioni();
+	public Vetrina getVetrina();
+	public ArrayList<Utente> getCandidati();
+	public ArrayList<Utente> getVotanti();
 }

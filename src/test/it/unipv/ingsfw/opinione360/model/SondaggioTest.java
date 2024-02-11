@@ -9,7 +9,9 @@ import org.junit.Test;
 
 import java.time.Instant;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import static org.junit.Assert.*;
 
@@ -38,7 +40,8 @@ public class SondaggioTest {
 		ArrayList<Utente> c = new ArrayList<>();
 		c.add(u4);
 		String[] o = {"Michael Schumacher", "Lewis Hamilton", "Ayrton Senna", "Sebastian Vettel", "Alain Prost"};
-		cons = new Sondaggio("Miglior pilota di Formula 1?", v, c, o, Date.from(Instant.now()));
+        Calendar data = new GregorianCalendar(2024, Calendar.FEBRUARY,30, 0, 0,0);
+        cons = new Sondaggio("Miglior pilota di Formula 1?", v, c, o, data);
     }
 
     @Test

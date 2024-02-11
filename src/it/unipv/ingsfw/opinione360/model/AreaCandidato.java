@@ -9,13 +9,13 @@ import java.util.Arrays;
  */
 public class AreaCandidato {
 	
-    private ArrayList<String> contenuti;
+    private ArrayList<IContenuto> contenuti;
 
     /**
      * Costruttore che crea un'AreaCandidato con dei contenuti di tipo stringa
      * @param contenuti i contenuti
      */
-    public AreaCandidato(String [] contenuti){
+    public AreaCandidato(IContenuto[] contenuti){
         this.contenuti = new ArrayList<>(Arrays.asList(contenuti));
     }
 
@@ -32,15 +32,23 @@ public class AreaCandidato {
      */
     @Override
     public String toString() {
-    	return String.join("\n", contenuti);
+    	StringBuilder result = new StringBuilder("AreaCandidato\n");
+    	for (IContenuto cont: contenuti) {
+    		result.append(cont.toString()).append('\n');
+    	}
+        return result.toString();
     }
 
     /**
      * Metodo che permette di aggiungere contenuti ad un AreaCandidato
      * @param contenuto i contenuti
      */
-    public void aggiungiContenuto(String contenuto){
+    public void aggiungiContenuto(IContenuto contenuto){
     	contenuti.add(contenuto);
+    }
+    
+    public ArrayList<IContenuto> getContenuti() {
+    	return new ArrayList<IContenuto>(this.contenuti);
     }
     
 }
