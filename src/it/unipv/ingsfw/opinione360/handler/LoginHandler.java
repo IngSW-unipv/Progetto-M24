@@ -15,8 +15,8 @@ import java.io.*;
 import java.sql.SQLException;
 
 /**
- * Questa classe permette la gestione di un HttpExchange di login
- * Accetta un HTTPExchange che abbia la segeuente struttura del body:<br>
+ * Questa classe permette la gestione di un HttpExchange di login<br>
+ * Accetta un oggetto {@link it.unipv.ingsfw.opinione360.model.Utente} rappresentato tramite Json.
  * @see HttpHandler
  */
 public class LoginHandler implements HttpHandler {
@@ -32,7 +32,7 @@ public class LoginHandler implements HttpHandler {
     }
 
     /**
-     * Override del metodo dell'interfaccia HttpHandler che gestisce il login
+     * Implementazione del metodo dell'interfaccia HttpHandler che gestisce il login
      * @param exchange the exchange containing the request from the
      *                 client and used to send the response
      * @throws IOException
@@ -46,11 +46,11 @@ public class LoginHandler implements HttpHandler {
             InputStream in = exchange.getRequestBody();
             BufferedReader buffread = new BufferedReader(new InputStreamReader(in));
             messaggio = buffread.readLine();
-            Utente utenteIn = gson.fromJson(messaggio, Utente.class);
-            if(utenteIn != null){
-                 UtenteDTO utenteOut = UtenteMapper.entityToDto(ud.selectByUsrPw(utenteIn));
-                 risposta = gson.toJson(utenteOut);
-                 exchange.sendResponseHeaders(200, risposta.length());
+            if(!messaggio.isBlank()){
+                Utente utenteIn = gson.fromJson(messaggio, Utente.class);
+                UtenteDTO utenteOut = UtenteMapper.entityToDto(ud.selectByUsrPw(utenteIn));
+                risposta = gson.toJson(utenteOut);
+                exchange.sendResponseHeaders(200, risposta.length());
             }
             else{
                 risposta = "Dati mancanti.";
@@ -62,13 +62,13 @@ public class LoginHandler implements HttpHandler {
 
         } catch (UserNotFoundException exc){
             risposta = exc.getMessage();
-            exchange.sendResponseHeaders(401, risposta.length());
+            exchange.sendResponseHeaders(404, risposta.length());
             OutputStream out = exchange.getResponseBody();
             out.write(risposta.getBytes());
             exchange.close();
-        } catch (SQLException exc) {
+        } catch (SQLException | IOException exc) {
             risposta = exc.getMessage();
-            exchange.sendResponseHeaders(500, risposta.length());
+            exchange.sendResponseHeaders(500, 0);
             OutputStream out = exchange.getResponseBody();
             out.write(risposta.getBytes());
             exchange.close();

@@ -44,12 +44,24 @@ public class Amministratore extends Utente {
 		this.data_selezione = data;
 	}
 
-	public Date getData_selezione() {
+    public Amministratore(UUID id) {
+		super(id);
+    }
+
+    public Amministratore(String username, String password, String email, String id_socetario) {
+		super(username,password,email,id_socetario);
+    }
+
+    public Date getData_selezione() {
 		return data_selezione;
 	}
 
 	public void setData_selezione(Date data_selezione) {
 		this.data_selezione = data_selezione;
 	}
-
+	
+	@Override
+	public Utente clone(){
+		return new Amministratore(getId(), getUsername(), getPassword(), getEmail(), getId_societario());
+	}
 }
