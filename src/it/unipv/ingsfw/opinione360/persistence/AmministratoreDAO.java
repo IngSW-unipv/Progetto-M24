@@ -125,7 +125,6 @@ public class AmministratoreDAO implements IAmministratoreDAO {
 		    }  
 
 		} catch (Exception e){
-//			e.printStackTrace();
 			esito=false;
 		}
 		
