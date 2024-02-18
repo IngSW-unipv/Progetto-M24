@@ -63,6 +63,7 @@ public class ServerSingleton implements IServer {
      * /Vota<br>
      * /Consultazioni_lista<br>
      * /Consultazione<br>
+     * /GetUtenti<br>
      * /Crea_consultazione<br>
      * /Carica_vetrina<br>
      */
@@ -75,7 +76,8 @@ public class ServerSingleton implements IServer {
         server.createContext("/Login", new LoginHandler()).getFilters().add(postFilter);
         server.createContext("/Vota", new VotoHandler()).getFilters().add(postFilter);
         server.createContext("/Consultazioni_lista", new GetConsultazioniHandler()).getFilters().add(getFilter);
-        //server.createContext("/Consultazione");
+        server.createContext("/Consultazione", new GetConsultazioneSingolaHandler()).getFilters().add(getFilter);
+        server.createContext("/GetUtenti", new GetUtentiHandler()).getFilters().add(getFilter);
         server.createContext("/Crea_consultazione", new CreaConsultazioneHandler()).getFilters().add(postFilter);
         server.createContext("/Carica_vetrina", new CaricaVetrinaHandler()).getFilters().add(postFilter);
 
@@ -86,5 +88,8 @@ public class ServerSingleton implements IServer {
     @Override
     public void stopServer(){
         server.stop(100);
+    }
+    public void stopServer(int delay){
+        server.stop(delay);
     }
 }

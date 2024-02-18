@@ -1,10 +1,8 @@
 package it.unipv.ingsfw.opinione360.dto;
 
-import it.unipv.ingsfw.opinione360.dto.SondaggioDTO;
 import it.unipv.ingsfw.opinione360.model.Sondaggio;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class SondaggioMapper {
     public static SondaggioDTO entityToDto(Sondaggio entity){
@@ -17,7 +15,6 @@ public class SondaggioMapper {
     }
      public static ArrayList<SondaggioDTO> entityCollectionToDto(ArrayList<Sondaggio> entity){
         ArrayList<SondaggioDTO> dto = new ArrayList<>();
-        int size = entity.size();
         for (Sondaggio s : entity) {
             SondaggioDTO sd = new SondaggioDTO();
             sd.setId(s.getId());
