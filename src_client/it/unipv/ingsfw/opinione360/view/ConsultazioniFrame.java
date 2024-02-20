@@ -7,6 +7,9 @@ import it.unipv.ingsfw.opinione360.exception.UserMissingAccessException;
 
 import java.util.ArrayList;
 
+/**
+ * Schermata che visualizza tutte le consultazioni aperte
+ */
 public class ConsultazioniFrame extends JFrame {
 	
 	private JLabel consTit;
@@ -15,7 +18,7 @@ public class ConsultazioniFrame extends JFrame {
 	private JButton indBottone;  
 	
 	/**
-	 * Costruttore
+	 * Costruttore senza parametri
 	 */
 	public ConsultazioniFrame() {
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -43,6 +46,8 @@ public class ConsultazioniFrame extends JFrame {
 		consBottoni.add(b2);  
 		JButton b3 = new JButton("Quale colore è meglio?");
 		consBottoni.add(b3);
+		JButton b4 = new JButton("Quale animale preferisci??");
+		consBottoni.add(b4);
 		
 		consSchermo = new JPanel();
 		consSchermo.setLayout(new GridLayout(5, 2, 40, 40));

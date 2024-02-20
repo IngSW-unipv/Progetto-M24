@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import javax.swing.*;
 
 /**
- * Schermata relativa alla scelta della consultazione per la quale si vuole votare e alla scelta del proprio voto
+ * Schermata che permette di votare per la consultazione scelta
  */
 public class VotoFrame extends JFrame {
 	
@@ -19,7 +19,7 @@ public class VotoFrame extends JFrame {
 	private JButton confBottone;                    // conf = conferma
 
 	/**
-	 * Costruttore
+	 * Costruttore senza parametri
 	 */
 	public VotoFrame() {
 		Toolkit kit = Toolkit.getDefaultToolkit();

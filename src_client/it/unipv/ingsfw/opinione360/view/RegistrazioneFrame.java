@@ -3,16 +3,20 @@ package it.unipv.ingsfw.opinione360.view;
 import java.awt.*;
 import javax.swing.*;
 
+/**
+ * Schermata relativa alla registrazione di un utente alla piattaforma
+ */
 public class RegistrazioneFrame extends CampiFrame {
 	
 	private JLabel regTit;
-	private JTextField idCampo;
+	private JTextField idSocCampo;
+	private JPanel regSchermo;
 	private JPanel icSchermo;
 	private JButton indBottone;
 	private JButton confBottone;
 	
 	/**
-	 * Costruttore
+	 * Costruttore senza parametri
 	 */
 	public RegistrazioneFrame() {
 		super();
@@ -29,12 +33,13 @@ public class RegistrazioneFrame extends CampiFrame {
 		
 		JPanel logSchermo4 = new JPanel();
 		logSchermo4.add(new JLabel("ID societario: "));
-		idCampo = new JTextField();
-		idCampo.setPreferredSize(new Dimension(300, 25));
-		logSchermo4.add(idCampo);
+		idSocCampo = new JTextField();
+		idSocCampo.setPreferredSize(new Dimension(300, 25));
+		logSchermo4.add(idSocCampo);
 		
-		super.getLogSchermo().setLayout(new GridLayout(4, 1));
-		super.getLogSchermo().add(logSchermo4);
+		regSchermo = super.getCampiSchermo();
+		regSchermo.setLayout(new GridLayout(4, 1));
+		regSchermo.add(logSchermo4);
 		
 		icSchermo = new JPanel();
 		
@@ -44,7 +49,7 @@ public class RegistrazioneFrame extends CampiFrame {
 		icSchermo.add(confBottone);
 		
 		add(regTit, BorderLayout.NORTH);
-		add(super.getLogSchermo(), BorderLayout.CENTER);
+		add(regSchermo, BorderLayout.CENTER);
 		add(icSchermo, BorderLayout.SOUTH);
 	}
 	
@@ -52,8 +57,12 @@ public class RegistrazioneFrame extends CampiFrame {
 		return regTit;
 	}
 	
-	public JTextField getIdCampo() {
-		return idCampo;
+	public JPanel getRegSchermo() {
+		return regSchermo;
+	}
+	
+	public JTextField getIdSocietarioCampo() {
+		return idSocCampo;
 	}
 	
 	public JPanel getICSchermo() {

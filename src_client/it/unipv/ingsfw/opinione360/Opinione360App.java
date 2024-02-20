@@ -1,7 +1,8 @@
-package it.unipv.ingsfw.opinione360.controller;
+package it.unipv.ingsfw.opinione360;
 
 import javax.swing.JFrame;
 
+import it.unipv.ingsfw.opinione360.controller.*;
 import it.unipv.ingsfw.opinione360.model.DomainFacade;
 import it.unipv.ingsfw.opinione360.view.*;
 
@@ -23,7 +24,7 @@ public class Opinione360App {
 		vf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		VetrinaFrame vetf = new VetrinaFrame();
 		vetf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		AreaCandidatoFrame acf = new AreaCandidatoFrame();
+		AreaContenutoFrame acf = new AreaContenutoFrame();
 		acf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		DomainFacade df = DomainFacade.getInstance(); 
 		CLogRegController clr = new CLogRegController(lf, logf, rf, cf, df);

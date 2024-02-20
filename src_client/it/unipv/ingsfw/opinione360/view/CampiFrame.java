@@ -9,14 +9,13 @@ import javax.swing.*;
 
 public abstract class CampiFrame extends JFrame {
 	
-	private JPanel logSchermo;
-	
+	private JPanel campiSchermo;
 	private JTextField userCampo;
 	private JTextField emailCampo;
 	private JPasswordField passCampo;
 
 	/**
-	 * Costruttore
+	 * Costruttore senza parametri
 	 */
 	public CampiFrame() {
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -32,7 +31,7 @@ public abstract class CampiFrame extends JFrame {
 	private void initComponents() {
 		setLayout(new BorderLayout());
 		
-		logSchermo = new JPanel();
+		campiSchermo = new JPanel();
 		
 		Dimension dim = new Dimension(300, 25);
 		
@@ -55,13 +54,13 @@ public abstract class CampiFrame extends JFrame {
 		logSchermo3.add(passCampo);
 		
 	
-		logSchermo.add(logSchermo1);
-		logSchermo.add(logSchermo2);
-		logSchermo.add(logSchermo3);
+		campiSchermo.add(logSchermo1);
+		campiSchermo.add(logSchermo2);
+		campiSchermo.add(logSchermo3);
 	}
 	
-	public JPanel getLogSchermo() {
-		return logSchermo;
+	public JPanel getCampiSchermo() {
+		return campiSchermo;
 	}
 	
 	public JTextField getUserCampo() {

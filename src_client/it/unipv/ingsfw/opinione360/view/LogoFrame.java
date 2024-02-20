@@ -11,7 +11,7 @@ public class LogoFrame extends JFrame {
 	private JButton enBottone;
 
 	/**
-	 * Costruttore
+	 * Costruttore senza parametri
 	 */
 	public LogoFrame() {
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -20,13 +20,15 @@ public class LogoFrame extends JFrame {
 		int screenWidth = screenSize.width;
 		setSize(screenWidth / 2, screenHeight / 2);
 		setLocation(screenWidth / 4, screenHeight / 4);
+		ImageIcon icon = new ImageIcon("Materiale utile/Logo/LogoV4.png");
+		setIconImage(icon.getImage());
 		setTitle("Opinione 360");
 		initComponents();
 	}
 	
 	private void initComponents() {
 		setLayout(new BorderLayout());
-		JLabel logoEt = new JLabel(new ImageIcon("Materiale utile/Logo/LogoV4.png"));
+		JLabel logoEt = new JLabel(new ImageIcon("resources/Logo_Opinione360.png"));
 		JPanel ep = new JPanel();
 		ep.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
 		enBottone = new JButton("Entra");

@@ -5,30 +5,32 @@ import javax.swing.JButton;
 
 import it.unipv.ingsfw.opinione360.model.DomainFacade;
 import it.unipv.ingsfw.opinione360.model.SondaggioC;
-import it.unipv.ingsfw.opinione360.view.AreaCandidatoFrame;
+import it.unipv.ingsfw.opinione360.view.AreaContenutoFrame;
 import it.unipv.ingsfw.opinione360.view.VetrinaFrame;
 import it.unipv.ingsfw.opinione360.view.VotoFrame;
 
 /**
- * Controller che gestisce la vetrina
+ * Controller che gestisce la visualizzazione della vetrina
  * @see VotoFrame
  * @see VetrinaFrame
+ * @see AreaContenutoFrame
  * @see DomainFacade
  */
 public class CVetrinaController {
 	
 	private final VotoFrame vf;
 	private final VetrinaFrame vetf;
+	private final AreaContenutoFrame acf;
 	private final DomainFacade df;
-	private final AreaCandidatoFrame acf;
 
 	/**
 	 * Costruttore parametrizzato
 	 * @param vf schermata di voto
 	 * @param vetf schermata della vetrina
-	 * @param df 
+	 * @param acf schermata della specifica area candidato 
+	 * @param df facciata che rappresenta il dominio del client
 	 */
-	public CVetrinaController(VotoFrame vf, VetrinaFrame vetf, AreaCandidatoFrame acf, DomainFacade df) {
+	public CVetrinaController(VotoFrame vf, VetrinaFrame vetf, AreaContenutoFrame acf, DomainFacade df) {
 		this.vf = vf;
 		this.vetf = vetf;
 		this.acf = acf;
@@ -44,6 +46,8 @@ public class CVetrinaController {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				vetf.setVisible(false);
+				String s = ((JButton)e.getSource()).getText();
+				acf.setTit(s);
 				acf.setVisible(true);
 			}
 		};

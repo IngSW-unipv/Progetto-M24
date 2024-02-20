@@ -4,20 +4,23 @@ import java.awt.*;
 import javax.swing.*;
 
 /**
- * Schermata relativa al login e alla registrazione di un utente alla piattaforma 
+ * Schermata relativa al login di un utente alla piattaforma 
  */
 public class LoginFrame extends CampiFrame {
 
 	private JLabel logTit;
+	private JPanel logSchermo;
 	private JPanel rcSchermo;
 	private JButton regBottone;
 	private JButton confBottone;
 
 	/**
-	 * Costruttore
+	 * Costruttore senza parametri
 	 */
 	public LoginFrame() {
 		super();
+		ImageIcon icon = new ImageIcon("Materiale utile/Logo/LogoV4.png");
+		setIconImage(icon.getImage());
 		initComponents();
 	}
 
@@ -29,7 +32,8 @@ public class LoginFrame extends CampiFrame {
 		logTit.setHorizontalAlignment(SwingConstants.CENTER);
 		logTit.setFont(new Font("Arial", 1, 18));
 		
-		super.getLogSchermo().setLayout(new GridLayout(3, 1));
+		logSchermo = super.getCampiSchermo();
+		logSchermo.setLayout(new GridLayout(3, 1));
 		
 		rcSchermo = new JPanel();
 		
@@ -39,12 +43,16 @@ public class LoginFrame extends CampiFrame {
 		rcSchermo.add(confBottone);
 		
 		add(logTit, BorderLayout.NORTH);
-		add(super.getLogSchermo(), BorderLayout.CENTER);
+		add(logSchermo, BorderLayout.CENTER);
 		add(rcSchermo, BorderLayout.SOUTH);
 	}
 
 	public JLabel getLogTit() {
 		return logTit;
+	}
+	
+	public JPanel getLogSchermo() {
+		return logSchermo;
 	}
 
 	public JPanel getRCSchermo() {

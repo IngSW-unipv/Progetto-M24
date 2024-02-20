@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 /**
  * Schermata della vetrina della consultazione selezionata
- * @see AreaCandidato
+ * @see AreaContenuti
  */
 public class VetrinaFrame extends JFrame {
 
@@ -17,7 +17,7 @@ public class VetrinaFrame extends JFrame {
 	private JButton indBottone;
 
 	/**
-	 * Costruttore
+	 * Costruttore senza parametri
 	 */
 	public VetrinaFrame() {
 		Toolkit kit = Toolkit.getDefaultToolkit();
@@ -35,6 +35,7 @@ public class VetrinaFrame extends JFrame {
 		setLayout(new BorderLayout());
 		
 		vetTit = new JLabel("Vetrina");
+		vetTit.setPreferredSize(new Dimension(300, 70));
 		vetTit.setHorizontalAlignment(SwingConstants.CENTER);
 		vetTit.setFont(new Font("Arial", 1, 18));
 		

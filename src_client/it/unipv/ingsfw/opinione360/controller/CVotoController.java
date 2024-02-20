@@ -10,7 +10,6 @@ import it.unipv.ingsfw.opinione360.model.DomainFacade;
 import it.unipv.ingsfw.opinione360.model.SondaggioC;
 import it.unipv.ingsfw.opinione360.view.ConsultazioniFrame;
 import it.unipv.ingsfw.opinione360.view.LoginFrame;
-import it.unipv.ingsfw.opinione360.view.VetrinaFrame;
 import it.unipv.ingsfw.opinione360.view.VotoFrame;
 import it.unipv.ingsfw.opinione360.view.popup.MessaggioFrame;
 
@@ -27,25 +26,26 @@ public class CVotoController {
 	private final ConsultazioniFrame cf;
 	private final VotoFrame vf;
 	private final DomainFacade df;
+	private final MessaggioFrame mf;
 	
 	/**
 	 * Costruttore parametrizzato
 	 * @param logf schermata di login 
 	 * @param cf schermata di scelta della consultazione
 	 * @param vf schermata di voto
-	 * @param df 
+	 * @param df facciata che rappresenta il dominio del client
 	 */
 	public CVotoController(LoginFrame logf, ConsultazioniFrame cf, VotoFrame vf, DomainFacade df) {
 		this.logf = logf;
 		this.cf = cf;
 		this.vf = vf;
 		this.df = df;
+		mf = MessaggioFrame.getInstance();
 		setListeners();
 	}
 
 	/**
 	 * Imposta i listener dei bottoni dell'interfaccia grafica
-	 * @throws UserMissingAccessException
 	 */
 	private void setListeners() {
 		ActionListener ind1Al = new ActionListener() {
@@ -69,9 +69,8 @@ public class CVotoController {
 					vf.setVisible(true);
 				}
 				catch(UserMissingAccessException err) {
-					MessaggioFrame mf = MessaggioFrame.getInstance();
 					mf.setTitle("Errore");
-					mf.getLabel().setText("L'utente inserito non esiste.");
+					mf.getMess().setText("L'utente inserito non esiste.");
 					mf.setVisible(true);
 				}
 			}
@@ -97,16 +96,14 @@ public class CVotoController {
 					if(b.get(i).isSelected())
 						id_opzioni.add(i);
 				try {
-					MessaggioFrame puf = MessaggioFrame.getInstance();
-					puf.setTitle("Esito");
 					df.vota(df.getSondaggio(), id_opzioni);
-					puf.getLabel().setText("L'operazione è andata a buon fine e il tuo voto è stato registrato!");
-					puf.setVisible(true);
+					mf.setTitle("Esito positivo");
+					mf.getMess().setText("Il tuo voto è stato registrato!");
+					mf.setVisible(true);
 				}
 				catch(EmptyFieldException er) {
-					MessaggioFrame mf = MessaggioFrame.getInstance();
 					mf.setTitle("Errore");
-					mf.getLabel().setText("Seleziona almeno un'opzione.");           
+					mf.getMess().setText("Seleziona almeno un'opzione.");           
 					mf.setVisible(true);
 				}
 			}
