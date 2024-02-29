@@ -36,17 +36,15 @@
   3. Il sistema visualizza la lista degli utenti aggiunti
   4. L'amministratore seleziona i candidati
   5. Il sistema visualizza la lista dei candidati
-  7. L'amministratore inserisce una data di inizio e di fine
-  8. L'amministratore sceglie la tipologia di consultazione
-  9. L'amministratore imposta l'oggetto della consultazione
-  10. L'amministratore conferma la visibilità dei risultati
-  11. Il sistema chiede conferma della creazione riepilogando le caratteristiche
-  12. L'amministratore dà la conferma
-  13. Il sistema crea la consultazione con relativa vetrina
+  6. L'amministratore inserisce una data di inizio e di fine
+  7. L'amministratore sceglie la tipologia di consultazione
+  8. L'amministratore imposta l'oggetto della consultazione
+  9. Il sistema chiede conferma della creazione riepilogando le caratteristiche
+  10. L'amministratore dà la conferma
+  11. Il sistema crea la consultazione con relativa vetrina
 - **Sequenze alternative**:
   - *a. L'amministratore interrompe la creazione:
   - 3a.  L'amministratore rimuove uno o più utenti
-  - 10a. L'amministratore aggiunge altri utenti che possono visualizzare i risultati
   - 9a. L'amministratore sceglie la votazione
   - 9b. L'amministratore sceglie il sondaggio
       - Il sistema chiede se impostare la scelta multipla
@@ -82,13 +80,10 @@
   - 4-5a. Il caricamento dei contenuti fallisce:
       * Il sistema notifica il candidato lo stato dell'operazione.
       * Il candidato ripete l'operazione di caricamento.
-  - a* Durante la memorizzazione dei contenuti, il sistema entra in stato di errore:
-      * L'amministratore riavvia il sistema.
-      * Il sistema verifica lo stato dei contenuti caricati.
-      * Il sistema notifica il candidato dello stato della memoria dei contenuti caricati.
-      * Il candidato carica nuovamente i contenuti danneggiati.
 * **Requisiti speciali**:
    * Il sistema deve garantire pari visibilità ai contenuti caricati per tutte le diverse opzioni del quesito.
 * **Varianti tecnologiche e dei dati**:
-   * Il sistema deve garantire un sufficiente numero di formati multimediali per i contenuti della vetrina: txt, jpg, mp4.
+   * Il sistema deve garantire un sufficiente numero di formati multimediali per i contenuti della vetrina: txt, png
 * **Frequenza**: In qualunque momento tra la creazione della consultazione e l'apertura ai votanti della possibilità di voto.
+* **Problemi aperti** 
+  *  Se durante la memorizzazione dei contenuti il sistema entra in uno stato di errore quali sono le operazioni da svolgere?

@@ -11,7 +11,7 @@
 Lo scopo di questo documento è quello di presentare una descrizione dettagliata del sistema Opinione360. Spiegherà lo scopo e le funzionalità del sistema, cio che farà e i vincoli sotto i quali deve operare. Questo documento è pensato sia per gli stakeholder sia per gli sviluppatori del sistema.
 
 ### 1.2. Scopo del prodotto
-Questo sistema software sarà una piattaforma di votazione per società private o pubbliche. Sarà progettato per garantire la sicurezza dei dati e l'anonimato degli utenti che partecipano alle consultazioni permettendo nel contempo alle società di ottenere i risultati in modo più efficiente, evitando di dover utilizzare un processo manuale di votazione che richiede una lunga preparazione.
+Questo sistema software sarà una piattaforma di votazione per società private o pubbliche. Sarà progettato per garantire l'anonimato degli utenti che partecipano alle consultazioni permettendo nel contempo alle società di ottenere i risultati in modo più efficiente, evitando di dover utilizzare un processo manuale di votazione che richiede una lunga preparazione.
 Più nello specifico il sistema permetterà a degli amministratori, scelti all'interno della società, di creare delle consultazioni secondo le indicazioni fornitegli di volta in volta. 
 Il sistema conterrà inoltre un database relazionale per garantire la persistenza dei dati.
 
@@ -40,13 +40,12 @@ Entrambe le sezioni del documento descrivono lo stesso sistema software nella su
 
 ## 2.0 Descrizione generale
 ### 2.1 Funzioni del prodotto
-1.   Il sistema deve permettere la creazione di nuovi sondaggi e votazioni selezionando un bacino di utenti che viene notificato, la durata e l’oggetto della votazione.
-2.    Il sistema deve essere affidabile, garantire la privacy degli utenti e l’accuratezza dei risultati prevenendo manipolazioni da parte di utenti e amministratori.
-3.    Gli amministratori devono poter creare due tipi di consultazioni: sondaggi e votazioni. Ciascuno di essi può avere come oggetto un quesito o l’elezione di candidati.
-4.    Il sistema deve memorizzare le informazioni rilevanti e i risultati delle consultazioni concluse. I risultati devono essere notificati agli utenti coinvolti.
-5.    Per accedere al sondaggio è sufficiente autenticarsi utilizzando le credenziali della piattaforma. Per i sondaggi il sistema permette ai votanti di visualizzare in uno storico le scelte effettuate in precedenza e permette agli amministratori di impostare la scelta multipla per l’oggetto della consultazione.
-6.   Per accedere alle votazioni è necessario utilizzare le credenziali della piattaforma e un sistema di autenticazione univoco. Le votazioni permettono di selezionare una sola opzione e garantiscono l’anonimato del voto.
-7.    Il sistema crea una vetrina per ogni consultazione accessibile solo ai candidati. Gli amministratori inseriscono i candidati quando creano le consultazioni.
+1. Il sistema deve permettere la creazione di nuovi sondaggi e votazioni selezionando un bacino di utenti che viene notificato, la durata e l’oggetto della votazione.
+2. Il sistema deve essere affidabile, garantire la privacy degli utenti e l’accuratezza dei risultati prevenendo manipolazioni da parte di utenti e amministratori.
+3. Gli amministratori devono poter creare due tipi di consultazioni: sondaggi e votazioni. Ciascuno di essi può avere come oggetto un quesito o l’elezione di candidati.
+4. Il sistema deve memorizzare le informazioni rilevanti e i risultati delle consultazioni concluse. I risultati devono essere notificati agli utenti coinvolti.
+5. Per accedere al sondaggio è sufficiente autenticarsi utilizzando le credenziali della piattaforma. Per i sondaggi il sistema permette ai votanti di visualizzare in uno storico le scelte effettuate in precedenza.
+6. Il sistema crea una vetrina per ogni consultazione accessibile solo ai candidati. Gli amministratori inseriscono i candidati quando creano le consultazioni.
 
 ## 3.0 Specifica dei requisiti
 Questa sezione descrive i requisiti funzionali e non funzionali. I riferimenti ai requisiti utente corrispettivi sono indicati tra parentesi a fine riga.
@@ -61,15 +60,12 @@ L'unico collegamento ad un sistema esterno è quello al sistema di autenticazion
 * L'amministratore imposta la data di inizio e la data di fine della consultazione. (RU1)
 * La vetrina viene generata al momento della creazione della consultazione. (RU7)
 * La consultazione può essere di due tipi: sondaggio o votazione. (RU1,RU3) 
-* L'amministratore imposta l'oggetto della consultazione in formato di scelta singola. (RU1)
-* Per il sondaggio l'amministratore imposta alternativamente una scelta multipla. (RU5) 
-* Per le consultazioni concluse l'amministratore opzionalmente amplia la lista di utenti che possono visualizzare i risultati di una consultazione. (RU2)
+* L'amministratore imposta l'oggetto della consultazione in formato di scelta multipla. (RU1)
 * Per le consultazioni concluse il registro memorizza il quesito, data di inizio e fine, i risultati. (RU4)
 * Per le consultazioni concluse i votanti e i candidati ricevono una notifica dal sistema con i risultati. (RU4)
 * Per utilizzare la piattaforma l'utente deve essere registrato. (RU5,RU6)
-* Per partecipare alla consultazione l'utente si autentica, accede alla pagina relativa ed esprime la propria scelta. (RU5,RU6)
+* Per partecipare alla consultazione l'utente si autentica, accede alla pagina relativa ed esprime la propria scelta. (RU5)
 * L'utente può visualizzare lo storico delle scelte effettuate nei sondaggi. (RU5)
-* Per la votazione il votante deve anche autenticarsi tramite un servizio esterno sicuro. (RU6)
 
 ### 3.3 Requisiti non funzionali
 * Requisiti del prodotto
@@ -77,13 +73,13 @@ L'unico collegamento ad un sistema esterno è quello al sistema di autenticazion
   * Il software utilizza massimo  2 GB con 100 consultazioni attive
 
 * Requisiti organizzativi
-  * Il sistema utilizza il protocollo HTTPS per la trasmissione di informazioni sensibili. (RU2)
 * Il sistema è realizzato utilizzando il linguaggio Java 21
+* il sistema utilozza il protocollo HTTP per inviare i dati.
 
 * Requisiti esterni
   * Il sistema utilizza il servizio GCP per per implementare il livello di persistenza.
   * Il sistema non memorizza l'associazione fra votante e scelta. (RU6)
-  * L’utente, dopo aver visualizzato l'informativa della privacy, autorizza il sistema a salvare ed elaborare i propri dati al momento della registrazione. (RU2)
+  * L’utente autorizza il sistema a salvare ed elaborare i propri dati al momento della registrazione. (RU2)
   * Il sistema gestisce i dati degli utenti in conformità dell’art. 13 del Regolamento UE n. 2016/679 (“General Data Protection Regulation” o “GDPR”) (RU2)
 
 ## 4.0 Indice

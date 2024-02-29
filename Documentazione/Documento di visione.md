@@ -11,7 +11,7 @@ A utilizzare questo sistema saranno società pubbliche e private che selezionano
 * Gli utenti coinvolti sono suddivisi in tre categorie: amministratori, candidati e votanti.    
 * Gli amministratori possono creare nuovi sondaggi, votazioni, vetrine elettorali e aggiungere candidati. 
 * I candidati possono aggiungere contenuti alla vetrina.                                       
-* La consultazione è possibile solo in un intervallo di tempo.                                  
-* Il sistema non deve consentire voti doppi sulla stessa votazione. 
+* La consultazione è disponibile solo in un intervallo di tempo.                                  
+* Il sistema non deve consentire voti doppi sulla stessa consultazione. 
 * Gli utenti devono essere registrati.
 * I sondaggi hanno uno storico.
