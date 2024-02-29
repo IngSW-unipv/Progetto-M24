@@ -50,7 +50,7 @@ Entrambe le sezioni del documento descrivono lo stesso sistema software nella su
 ## 3.0 Specifica dei requisiti
 Questa sezione descrive i requisiti funzionali e non funzionali. I riferimenti ai requisiti utente corrispettivi sono indicati tra parentesi a fine riga.
 ### 3.1 Requisiti di interfaccia esterna
-L'unico collegamento ad un sistema esterno è quello al sistema di autenticazione sicuro per riconoscere l’utente in caso di votazione.
+Il sistema si interfaccia unicamente con un livello di persistenza implementato con un database relazionale istanziato in cloud su GCP.
 ### 3.2 Requisiti funzionali
 * L'amministratore può creare una nuova consultazione. (RU1)
 * L'amministratore seleziona gli utenti che possono partecipare alla consultazione. (RU1)
@@ -73,8 +73,8 @@ L'unico collegamento ad un sistema esterno è quello al sistema di autenticazion
   * Il software utilizza massimo  2 GB con 100 consultazioni attive
 
 * Requisiti organizzativi
-* Il sistema è realizzato utilizzando il linguaggio Java 21
-* il sistema utilozza il protocollo HTTP per inviare i dati.
+  * Il sistema è realizzato utilizzando il linguaggio Java 21
+  * il sistema utilizza il protocollo HTTP per inviare i dati.
 
 * Requisiti esterni
   * Il sistema utilizza il servizio GCP per per implementare il livello di persistenza.
