@@ -20,6 +20,7 @@ public class UtenteDAOTest {
     @Before
     public void inTest(){
     	utenteDao = new UtenteDAO();
+    	utenteDao.setMode(false);
     	utenteDao.reset();
    }
     

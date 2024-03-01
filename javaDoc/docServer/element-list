@@ -1,0 +1,9 @@
+it.unipv.ingsfw.opinione360
+it.unipv.ingsfw.opinione360.dto
+it.unipv.ingsfw.opinione360.handler
+it.unipv.ingsfw.opinione360.model
+it.unipv.ingsfw.opinione360.model.exception
+it.unipv.ingsfw.opinione360.persistence
+it.unipv.ingsfw.opinione360.persistence.exception
+it.unipv.ingsfw.opinione360.server
+it.unipv.ingsfw.opinione360.util

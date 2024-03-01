@@ -10,7 +10,7 @@ import java.util.concurrent.Executors;
 
 /**
  * Classe Singleton che utilizza il server http presente nelle API Java
- * @see VotoHandler
+ * @see it.unipv.ingsfw.opinione360.handler
  * @see IServer
  */
 public class ServerSingleton implements IServer {
@@ -85,10 +85,20 @@ public class ServerSingleton implements IServer {
         server.start();
         System.out.println("Server in attesa sulla porta " + porta);
     }
+
+    /**
+     * Metodo che permette di spegnere il server
+     */
     @Override
     public void stopServer(){
         server.stop(100);
     }
+
+    /**
+     * Metodo che permette di spegnere il server specificando il ritardo
+     * @param delay il ritardo (in secondi) dopo cui il server si spegne
+     */
+    @Override
     public void stopServer(int delay){
         server.stop(delay);
     }

@@ -66,7 +66,15 @@ public class Utente {
 		this.email = email;
 		this.id_societario = id_societario;
 	}
-	
+
+	/**
+	 * Costruttore con tutti i parametri
+	 * @param id
+	 * @param username
+	 * @param password
+	 * @param email
+	 * @param id_societario
+	 */
 	public Utente(UUID id, String username, String password, String email, String id_societario){
 		this.id = id;
 		this.username = username;
@@ -124,5 +132,10 @@ public class Utente {
 	@Override
 	public String toString() {
 		return id + " " + username + " " + password + " " + email + " " + id_societario + "\n";
+	}
+	
+	@Override
+	public Utente clone(){
+		return new Utente(id, username, password, email, id_societario);
 	}
 }

@@ -7,7 +7,7 @@ package it.unipv.ingsfw.opinione360.exception;
 public class ConsultationExpiredException extends IllegalStateException {
 
 	public ConsultationExpiredException() {
-		super("La consultazione è terminata.");
+		super("La consultazione è terminata. Ecco i risultati.");
 	}
 
 }

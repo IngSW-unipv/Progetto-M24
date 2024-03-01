@@ -10,16 +10,16 @@ import java.util.Map;
  * Questa è la vetrina relativa a una consultazione in cui i candidati possono caricare contenuti
  * @see IConsultazione
  * @see Sondaggio
- * @see AreaCandidato
  */
-
+@Deprecated
 public class Vetrina {
 
-    private Map<Utente, AreaCandidato> elencoAreaCandidato;
+    private Map<Utente, AreaContenuti> elencoAreaCandidato;
 
     /**
      * Costruttore senza parametri
      */
+    @Deprecated
     public Vetrina(){
         elencoAreaCandidato = new Hashtable<>();
     }
@@ -28,11 +28,12 @@ public class Vetrina {
      * Costruttore che accetta un ArrayList di utenti
      * @param candidati lista di utenti che hanno accesso alla vetrina
      */
+    @Deprecated
     public Vetrina(ArrayList<Utente> candidati){
         elencoAreaCandidato = new Hashtable<>();
         
         for (Utente candidato: candidati){
-        	elencoAreaCandidato.put(candidato, new AreaCandidato());
+        	elencoAreaCandidato.put(candidato, new AreaContenuti());
         }
     }
 
@@ -41,19 +42,21 @@ public class Vetrina {
      * @param candidato l'utente che carica i contenuti
      * @param contenuti i contenuti testuali
      */
+    @Deprecated
     public void aggiungiArea(Utente candidato, IContenuto [] contenuti){
-        elencoAreaCandidato.put(candidato, new AreaCandidato(contenuti));
+        elencoAreaCandidato.put(candidato, new AreaContenuti(contenuti));
 
     }
 
     
     /**Aggiunge un contenuto alla vetrina per un candidato registrato.*/
+   @Deprecated
     public void aggiungiContenuto(Utente candidato, IContenuto contenuto) {
     	if (elencoAreaCandidato.containsKey(candidato)) {
     		elencoAreaCandidato.get(candidato).aggiungiContenuto(contenuto);
     	}
     	else {
-    		elencoAreaCandidato.put(candidato, new AreaCandidato(new IContenuto[]{contenuto}));    		
+    		elencoAreaCandidato.put(candidato, new AreaContenuti(new IContenuto[]{contenuto}));    		
     	}
     }
 
@@ -64,7 +67,7 @@ public class Vetrina {
     @Override
     public String toString() {
         StringBuilder result = new StringBuilder("Vetrina:\n");
-        for (Map.Entry<Utente, AreaCandidato> entry : elencoAreaCandidato.entrySet()) {
+        for (Map.Entry<Utente, AreaContenuti> entry : elencoAreaCandidato.entrySet()) {
             result.append("\nArea candidato con i contenuti di ").append(entry.getKey().getUsername()).append(": \n").append(entry.getValue()).append("\n");
         }
         return result.toString();
@@ -76,7 +79,8 @@ public class Vetrina {
      * @return l' AreaCandidato relativa all' utente
      * @throws UserMissingAccessException
      */
-    public AreaCandidato getArea(Utente candidato) throws UserMissingAccessException {
+    @Deprecated
+    public AreaContenuti getArea(Utente candidato) throws UserMissingAccessException {
 		if (elencoAreaCandidato.containsKey(candidato))
 			return this.elencoAreaCandidato.get(candidato);
 		else

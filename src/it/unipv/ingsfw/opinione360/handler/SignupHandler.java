@@ -7,6 +7,7 @@ import com.sun.net.httpserver.HttpHandler;
 import it.unipv.ingsfw.opinione360.dto.UtenteMapper;
 import it.unipv.ingsfw.opinione360.model.Utente;
 import it.unipv.ingsfw.opinione360.persistence.IUtenteDAO;
+import it.unipv.ingsfw.opinione360.persistence.PersistenceFacade;
 import it.unipv.ingsfw.opinione360.persistence.UtenteDAO;
 
 import java.io.*;
@@ -14,7 +15,7 @@ import java.sql.SQLException;
 
 /**
  * Questa classe permette la gestione di un HttpExchange di sign up<br>
- * Accetta un oggetto {@link it.unipv.ingsfw.opinione360.model.Utente} rappresentato tramite Json.
+ * Accetta un HttpExchange che abbia nel body un oggetto {@link it.unipv.ingsfw.opinione360.model.Utente} rappresentato tramite Json.
  * @see HttpHandler
  */
 public class SignupHandler implements HttpHandler {
@@ -40,30 +41,30 @@ public class SignupHandler implements HttpHandler {
     public void handle(HttpExchange exchange) throws IOException {
         Gson gson = new Gson();
         messaggio = null;
+        PersistenceFacade pf = PersistenceFacade.getIstance();
         try {
             InputStream in = exchange.getRequestBody();
             BufferedReader buffread = new BufferedReader(new InputStreamReader(in));
             messaggio = buffread.readLine();
             if(!messaggio.isBlank()) {
                 Utente utente = gson.fromJson(messaggio, Utente.class);
-                IUtenteDAO ud = new UtenteDAO();
-                if (ud.insertUtente(utente)) {
-                    risposta = "Registrazione avvenuta con successo.";
+                if (pf.insertUtente(utente)) {
+                    risposta = gson.toJson(UtenteMapper.entityToDto(utente));
                     exchange.sendResponseHeaders(200, risposta.length());
                 }
                 else {
                    risposta = "Impossibile registrarsi.";
-                   exchange.sendResponseHeaders(500, risposta.length());
+                   exchange.sendResponseHeaders(406, risposta.length());
                 }
             }
             else{
                 risposta = "Dati mancanti.";
-                exchange.sendResponseHeaders(405, risposta.length());
+                exchange.sendResponseHeaders(400, risposta.length());
             }
             OutputStream out = exchange.getResponseBody();
             out.write(risposta.getBytes());
             exchange.close();
-        } catch(SQLException | IOException exc){
+        } catch(Exception exc){
             risposta = exc.getMessage();
             exchange.sendResponseHeaders(500, risposta.length());
             OutputStream out = exchange.getResponseBody();

@@ -19,7 +19,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Questa classe permette la gestione di un HttpExchange di richiesta dellea lista di utenti da parte di un amministartore
+ * Questa classe permette la gestione di un HttpExchange di richiesta della lista di utenti da parte di un amministartore<br>
+ * Accetta un HttpExchange che abbia nel path l'id (che deve essere di tipo {@link java.util.UUID}) dell'admin.
  * @see HttpHandler
  */
 public class GetUtentiHandler implements HttpHandler {
@@ -42,7 +43,7 @@ public class GetUtentiHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         Gson gson = new Gson();
-        IUtenteDAO ud = new UtenteDAO();
+        PersistenceFacade pf = PersistenceFacade.getIstance();
         ArrayList<UtenteDTO> listaUtenti;
         String regEx = "/GetUtenti\\?[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}$";
 
@@ -52,10 +53,9 @@ public class GetUtentiHandler implements HttpHandler {
             if(m.matches()){
                 String[] id = uri.split("\\?");
                 Amministratore admin = new Amministratore(UUID.fromString(id[1]));
-                IAmministratoreDAO ad = new AmministratoreDAO();
-                ad.selectById(admin);
+                pf.selectAdminById(admin);
 
-                listaUtenti = UtenteMapper.entityCollectionToDto(ud.selectAll());
+                listaUtenti = UtenteMapper.entityCollectionToDto(pf.selectAll());
                 risposta = gson.toJson(listaUtenti);
                 exchange.sendResponseHeaders(200, risposta.length());
             } else{
@@ -72,7 +72,7 @@ public class GetUtentiHandler implements HttpHandler {
             OutputStream out = exchange.getResponseBody();
             out.write(risposta.getBytes());
             exchange.close();
-        } catch (SQLException | IOException exc) {
+        } catch (Exception exc) {
             risposta = exc.getMessage();
             exchange.sendResponseHeaders(500, risposta.length());
             OutputStream out = exchange.getResponseBody();

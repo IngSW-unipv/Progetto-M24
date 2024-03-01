@@ -1,14 +1,19 @@
 package it.unipv.ingsfw.opinione360.dto;
 
-import it.unipv.ingsfw.opinione360.model.Vetrina;
-
 import java.util.UUID;
 
+/**
+ * POJO per l'invio di utenti al client
+ */
 public class UtenteDTO {
+    private String type;
     private UUID id;
     private String username;
-    private String email;
+    private String idSocietario;
 
+    public String getType() {
+        return type;
+    }
 
     public UUID getId() {
         return id;
@@ -18,8 +23,12 @@ public class UtenteDTO {
         return username;
     }
 
-    public String getEmail() {
-        return email;
+    public String getIdSocietario() {
+        return idSocietario;
+    }
+
+    public void setType(String type) {
+        this.type = type;
     }
 
     public void setId(UUID id) {
@@ -30,7 +39,7 @@ public class UtenteDTO {
         this.username = username;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setIdSocietario(String idSocietario) {
+        this.idSocietario = idSocietario;
     }
 }

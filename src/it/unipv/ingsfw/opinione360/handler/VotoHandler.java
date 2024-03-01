@@ -4,24 +4,23 @@ import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
+import it.unipv.ingsfw.opinione360.model.IConsultazione;
 import it.unipv.ingsfw.opinione360.model.Sondaggio;
 import it.unipv.ingsfw.opinione360.model.Utente;
 import it.unipv.ingsfw.opinione360.model.exception.ConsultationExpiredException;
 import it.unipv.ingsfw.opinione360.model.exception.UserMissingAccessException;
-import it.unipv.ingsfw.opinione360.persistence.ISondaggioDAO;
-import it.unipv.ingsfw.opinione360.persistence.IUtenteDAO;
-import it.unipv.ingsfw.opinione360.persistence.SondaggioDAO;
-import it.unipv.ingsfw.opinione360.persistence.UtenteDAO;
+import it.unipv.ingsfw.opinione360.model.Opzione;
+import it.unipv.ingsfw.opinione360.persistence.*;
 
 import java.io.*;
 import java.sql.SQLException;
 
 /**
  * Questa classe permette la gestione di un HttpExchange di votazione
- * Accetta un HTTPExchange che abbia abbia nel body i seguenti oggetti:<br>
+ * Accetta un HTTPExchange che abbia nel body i seguenti oggetti:<br>
  * Utente/nConsultazione/nscelta<br>
- * in cui Utente, Consultazione e sceleta sono rappresentati in formato Json.
- * @see com.sun.net.httpserver.HttpHandler
+ * in cui Utente, Consultazione e scelta sono serializzati in formato Json.
+ * @see HttpHandler
  */
 public class VotoHandler implements HttpHandler {
 
@@ -45,8 +44,7 @@ public class VotoHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         messaggio = null;
-        IUtenteDAO ud = new UtenteDAO();
-        ISondaggioDAO sd = new SondaggioDAO();
+        PersistenceFacade pf = PersistenceFacade.getIstance();
         Gson gson = new Gson();
 
         try{
@@ -55,15 +53,15 @@ public class VotoHandler implements HttpHandler {
             messaggio = buffread.readLine();
             Utente utente = gson.fromJson(messaggio, Utente.class);
             messaggio = buffread.readLine();
-            int scelta = gson.fromJson(messaggio, int.class);
+            Opzione [] scelta = gson.fromJson(messaggio, Opzione[].class);
             messaggio = buffread.readLine();
-            Sondaggio consultazione = gson.fromJson(messaggio, Sondaggio.class);
+            IConsultazione consultazione = gson.fromJson(messaggio, Sondaggio.class);
 
-            if(utente!=null && consultazione != null){
-                utente = ud.selectById(utente);
-                consultazione = sd.selectById(consultazione);
+            if(utente!=null && consultazione != null && scelta != null){
+                utente = pf.selectById(utente);
+                consultazione = pf.selectById(consultazione);
                 consultazione.vota(scelta, utente);
-                sd.updateSondaggio(consultazione);
+                pf.updateContatore(consultazione);
                 risposta = "Voto acquisito correttamente";
                 exchange.sendResponseHeaders(200, risposta.length());
             }
@@ -83,11 +81,11 @@ public class VotoHandler implements HttpHandler {
             exchange.close();
         } catch (ConsultationExpiredException exc){
             risposta = exc.getMessage();
-            exchange.sendResponseHeaders(418, 0); //I'm a trapot
+            exchange.sendResponseHeaders(418, 0);
             OutputStream out = exchange.getResponseBody();
             out.write(risposta.getBytes());
             exchange.close();
-        } catch (SQLException | IOException exc) {
+        } catch (Exception exc) {
             risposta = exc.getMessage();
             exchange.sendResponseHeaders(500, 0);
             OutputStream out = exchange.getResponseBody();

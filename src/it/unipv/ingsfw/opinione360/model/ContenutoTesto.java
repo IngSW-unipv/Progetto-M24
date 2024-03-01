@@ -5,7 +5,7 @@ import java.util.UUID;
 public class ContenutoTesto implements IContenuto {
 	private String data;
 	private UUID id;
-	private String extension = ".txt";
+	private final String extension = "TXT";
 	
 	public ContenutoTesto() {
 		this.id = UUID.randomUUID();
@@ -23,8 +23,8 @@ public class ContenutoTesto implements IContenuto {
 	}
 
 	@Override
-	public char[] getData() {
-		return this.data.toCharArray();
+	public byte[] getData() {
+		return this.data.getBytes();
 	}
 
 	@Override
@@ -49,5 +49,10 @@ public class ContenutoTesto implements IContenuto {
 		return this.extension;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		ContenutoTesto c = (ContenutoTesto) obj;
+		return this.id.equals(c.getId());
+	}
 	
 }

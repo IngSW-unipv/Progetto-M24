@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"l":"it.unipv.ingsfw.opinione360.dto"},{"l":"it.unipv.ingsfw.opinione360.handler"},{"l":"it.unipv.ingsfw.opinione360.model.exception"},{"l":"it.unipv.ingsfw.opinione360.persistence.exception"},{"l":"it.unipv.ingsfw.opinione360.server"}];updateSearchResults();

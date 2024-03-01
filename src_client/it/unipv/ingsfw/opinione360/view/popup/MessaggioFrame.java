@@ -21,6 +21,8 @@ public class MessaggioFrame extends JFrame {
 		int screenWidth = screenSize.width;
 		setSize(screenWidth / 5, screenHeight / 5);
 		setLocation(screenWidth / 5 * 2, screenHeight / 5 * 2);
+		ImageIcon icon = new ImageIcon("resources/Logo_Opinione360.png");
+		setIconImage(icon.getImage());
 		setResizable(false);
 		initComponents();
 	}

@@ -1,0 +1,11 @@
+it.unipv.ingsfw.opinione360
+it.unipv.ingsfw.opinione360.controller
+it.unipv.ingsfw.opinione360.exception
+it.unipv.ingsfw.opinione360.model
+it.unipv.ingsfw.opinione360.persistence
+it.unipv.ingsfw.opinione360.util
+it.unipv.ingsfw.opinione360.view.creaconsultazione
+it.unipv.ingsfw.opinione360.view.logreg
+it.unipv.ingsfw.opinione360.view.popup
+it.unipv.ingsfw.opinione360.view.vetrina
+it.unipv.ingsfw.opinione360.view.voto

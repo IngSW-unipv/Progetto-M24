@@ -7,7 +7,9 @@ import com.sun.net.httpserver.HttpHandler;
 import it.unipv.ingsfw.opinione360.dto.UtenteDTO;
 import it.unipv.ingsfw.opinione360.dto.UtenteMapper;
 import it.unipv.ingsfw.opinione360.model.Utente;
+import it.unipv.ingsfw.opinione360.persistence.AmministratoreDAO;
 import it.unipv.ingsfw.opinione360.persistence.IUtenteDAO;
+import it.unipv.ingsfw.opinione360.persistence.PersistenceFacade;
 import it.unipv.ingsfw.opinione360.persistence.UtenteDAO;
 import it.unipv.ingsfw.opinione360.persistence.exception.UserNotFoundException;
 
@@ -16,7 +18,7 @@ import java.sql.SQLException;
 
 /**
  * Questa classe permette la gestione di un HttpExchange di login<br>
- * Accetta un oggetto {@link it.unipv.ingsfw.opinione360.model.Utente} rappresentato tramite Json.
+ * Accetta un HttpExchange che abbia nel body un oggetto {@link it.unipv.ingsfw.opinione360.model.Utente} rappresentato tramite Json.
  * @see HttpHandler
  */
 public class LoginHandler implements HttpHandler {
@@ -40,7 +42,7 @@ public class LoginHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         Gson gson = new Gson();
-        IUtenteDAO ud = new UtenteDAO();
+        PersistenceFacade pf = PersistenceFacade.getIstance();
         messaggio = null;
         try{
             InputStream in = exchange.getRequestBody();
@@ -48,7 +50,7 @@ public class LoginHandler implements HttpHandler {
             messaggio = buffread.readLine();
             if(!messaggio.isBlank()){
                 Utente utenteIn = gson.fromJson(messaggio, Utente.class);
-                UtenteDTO utenteOut = UtenteMapper.entityToDto(ud.selectByUsrPw(utenteIn));
+                UtenteDTO utenteOut = UtenteMapper.entityToDto(pf.selectByUsrPw(utenteIn));
                 risposta = gson.toJson(utenteOut);
                 exchange.sendResponseHeaders(200, risposta.length());
             }
@@ -66,7 +68,7 @@ public class LoginHandler implements HttpHandler {
             OutputStream out = exchange.getResponseBody();
             out.write(risposta.getBytes());
             exchange.close();
-        } catch (SQLException | IOException exc) {
+        } catch (Exception exc) {
             risposta = exc.getMessage();
             exchange.sendResponseHeaders(500, 0);
             OutputStream out = exchange.getResponseBody();

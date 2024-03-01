@@ -1,19 +1,27 @@
 package it.unipv.ingsfw.opinione360.persistence;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
+import it.unipv.ingsfw.opinione360.exception.UserNotFoundException;
+import it.unipv.ingsfw.opinione360.model.IUtenteC;
 import it.unipv.ingsfw.opinione360.model.UtenteC;
 
 public interface IUtenteCDAO {
-	/**Restituisce l'utente attualmente registrato nel dispositivo*/
-	UtenteC selectLocal();
 	
-	
-	UtenteC selectById(UtenteC userInput);
-	
-	/**Ottiene le informazioni relative ad un utente tramite https, se ha accesso a tale informazione*/
-	UtenteC selectByUsrPw(UtenteC userInput);    
+	/**Restituisce l'utente attualmente registrato nel dispositivo
+	 * @throws SQLException 
+	 * @throws UserNotFoundException */
+	UtenteC selectLocal() throws SQLException, UserNotFoundException;
     
-    boolean insertUtente(UtenteC u);
-    boolean updateUtente(UtenteC u);
+    void insertUtente(UtenteC u) throws SQLException;
+    void updateUtente(IUtenteC u) throws SQLException;
+
+    /**Cancella l'utente dal database locale*/
+	void dropUtente(IUtenteC u) throws SQLException;
+
+
+	boolean reset();
+
+	UtenteC selectById(UtenteC utente);
 }

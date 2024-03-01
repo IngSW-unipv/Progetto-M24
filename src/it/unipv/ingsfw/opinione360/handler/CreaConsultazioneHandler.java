@@ -1,21 +1,23 @@
 package it.unipv.ingsfw.opinione360.handler;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
+
+import it.unipv.ingsfw.opinione360.model.IConsultazione;
 import it.unipv.ingsfw.opinione360.model.Sondaggio;
 import it.unipv.ingsfw.opinione360.model.Utente;
-import it.unipv.ingsfw.opinione360.persistence.AmministratoreDAO;
-import it.unipv.ingsfw.opinione360.persistence.IAmministratoreDAO;
-import it.unipv.ingsfw.opinione360.persistence.ISondaggioDAO;
-import it.unipv.ingsfw.opinione360.persistence.SondaggioDAO;
+import it.unipv.ingsfw.opinione360.persistence.*;
 import it.unipv.ingsfw.opinione360.persistence.exception.UserNotFoundException;
 
 import java.io.*;
-import java.sql.SQLException;
 
 /**
- * Questa classe permette la gestione di un HttpExchange di creazione di una consultazione
+ * Questa classe permette la gestione di un HttpExchange di creazione di una consultazione<br>
+ * Accetta un HttpExcange che nel body abbia i seguenti oggetti:<br>
+ * Ammministratore/nIConsultazione<br>
+ * in cui Amministratore e consultazione sono serializzati in Json.
  * @see HttpHandler
  */
 public class CreaConsultazioneHandler implements HttpHandler {
@@ -39,21 +41,36 @@ public class CreaConsultazioneHandler implements HttpHandler {
      */
     @Override
     public void handle(HttpExchange exchange) throws IOException {
-        Gson gson = new Gson();
-        IAmministratoreDAO ad = new AmministratoreDAO();
-        ISondaggioDAO cd = new SondaggioDAO();
+        Gson gson = new GsonBuilder().enableComplexMapKeySerialization().create();
+        PersistenceFacade pf = PersistenceFacade.getIstance();
+        IConsultazione consIn = null;
         messaggio = null;
+        String uri = exchange.getRequestURI().toString();
 
         try {
             InputStream in = exchange.getRequestBody();
-            BufferedReader in1 = new BufferedReader(new InputStreamReader(in));
-            messaggio = in1.readLine();
-            ad.selectById(gson.fromJson (messaggio, Utente.class));
-            messaggio = in1.readLine();
-            cd.insertSondaggio(gson.fromJson(messaggio, Sondaggio.class));
+            BufferedReader buffin = new BufferedReader(new InputStreamReader(in));
+            messaggio = buffin.readLine();
+            pf.selectById(gson.fromJson (messaggio, Utente.class));
+            messaggio = buffin.readLine();
+            if(uri.equals("/Crea_consultazione/Sondaggio"))
+                consIn = gson.fromJson(messaggio, Sondaggio.class);
+            /*else if (uri.equals("/Crea_consultazione/Votazione"))
+                consIn = gson.fromJson(messaggio, Sondaggio.class); //Votazione.class*/
 
-            risposta = "Consultazione creata con successo";
-            exchange.sendResponseHeaders(200, risposta.length());
+            if(consIn != null) {
+                if (pf.insertConsultazione(consIn)) {
+                    risposta = "Consultazione creata con successo";
+                    exchange.sendResponseHeaders(200, risposta.length());
+                } else {
+                    risposta = "Impossibile creare la consultazione.";
+                    exchange.sendResponseHeaders(406, risposta.length());
+                }
+            }
+            else{
+                risposta = "Dati mancanti.";
+                exchange.sendResponseHeaders(400, risposta.length());
+            }
             OutputStream out = exchange.getResponseBody();
             out.write(risposta.getBytes());
             exchange.close();
@@ -64,7 +81,7 @@ public class CreaConsultazioneHandler implements HttpHandler {
             OutputStream out = exchange.getResponseBody();
             out.write(risposta.getBytes());
             exchange.close();
-        } catch(SQLException |IOException exc){
+        } catch(Exception exc){
             risposta = exc.getMessage();
             exchange.sendResponseHeaders(500, risposta.length());
             OutputStream out = exchange.getResponseBody();

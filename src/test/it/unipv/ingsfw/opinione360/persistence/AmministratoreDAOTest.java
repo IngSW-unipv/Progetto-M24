@@ -19,6 +19,7 @@ public class AmministratoreDAOTest {
     @Before
     public void inTest(){
     	adminDao = new AmministratoreDAO();
+    	adminDao.setMode(false);
     	adminDao.reset();
    }
     

@@ -8,7 +8,7 @@ public interface IContenuto {
 	public UUID getId();
 	
 	/**Restituisce il contenuto dell'oggetto.*/
-	public char[] getData();
+	public byte[] getData();
 	
 	/**Restituisce il contenuto dell'oggetto.*/
 	public void setData(char[] data);

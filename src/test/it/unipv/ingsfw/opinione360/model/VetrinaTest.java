@@ -1,6 +1,6 @@
 package test.it.unipv.ingsfw.opinione360.model;
 
-import it.unipv.ingsfw.opinione360.model.AreaCandidato;
+import it.unipv.ingsfw.opinione360.model.AreaContenuti;
 import it.unipv.ingsfw.opinione360.model.Vetrina;
 import it.unipv.ingsfw.opinione360.model.Utente;
 import it.unipv.ingsfw.opinione360.model.exception.UserMissingAccessException;
@@ -38,7 +38,7 @@ public class VetrinaTest {
 
     @Test
     public void getAreaTestEq2() {
-        AreaCandidato ac = v.getArea(u1);
+        AreaContenuti ac = v.getArea(u1);
         assertNotNull(ac);
     }
 
